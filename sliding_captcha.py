@@ -1,8 +1,12 @@
 # 代码整体拼接而来
 # 实现过腾讯滑动验证
+# 总体参考链接
+# https://blog.csdn.net/Tracy_LeBron/article/details/84567419?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase
 # 默认selenium的ActionChains拖动不流畅，修改源码： PointerInput类中 DEFAULT_MOVE_DURATION = 30
 # 参考链接
 # https://blog.csdn.net/qq_36250766/article/details/100541705
+# 实际测试于 2020/10/13
+# 部分验证需要多次，运气好一次过
 
 
 from selenium import webdriver
