@@ -1,5 +1,9 @@
 # 代码整体拼接而来
 # 实现过腾讯滑动验证
+# 默认selenium的ActionChains拖动不流畅，修改源码： PointerInput类中 DEFAULT_MOVE_DURATION = 30
+# 参考链接
+# https://blog.csdn.net/qq_36250766/article/details/100541705
+
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -21,7 +25,8 @@ test_qq = '3402496934'
 # 输入qq跳转到验证阶段
 browser = webdriver.Chrome()
 browser.get('https://aq.qq.com/cn2/login_limit/index_smart')
-WebDriverWait(browser, 10).until(EC.element_to_be_clickable, (By.ID, 'next_step'))
+WebDriverWait(browser, 10).until(
+    EC.element_to_be_clickable, (By.ID, 'next_step'))
 
 browser.find_element_by_id('input_account_str').send_keys(test_qq)
 browser.find_element_by_id('next_step').click()
@@ -101,6 +106,8 @@ def get_tracks(dis):
 
 # 轨迹参考：
 # https://blog.csdn.net/qq_38685503/article/details/81187105?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase
+
+
 def get_tracks2(distance):
     """
     根据偏移量获取移动轨迹
@@ -149,8 +156,8 @@ while True:
     tracks.append(-25)
     element = driver.find_element_by_id('tcaptcha_drag_thumb')
     ActionChains(driver).click_and_hold(on_element=element).perform()
+    # 实际中他这个比准确位置多了25的xoffset，所以减去25
     d = double_distance-(sum(tracks)-double_distance) - 25
-    # ActionChains(driver).move_by_offset(xoffset=d, yoffset=0).perform()
     for track in tracks:
         ActionChains(driver).move_by_offset(xoffset=track, yoffset=0).perform()
     time.sleep(0.5)
